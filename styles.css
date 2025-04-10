@@ -1,0 +1,292 @@
+/* Reset and base styles */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Enable smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Color scheme */
+:root {
+  --bg-color: #242424; /* Dark gray background (fallback) */
+  --text-color: #f4f6f4; /* Off-white for text */
+  --accent-color: #de4633; /* Red-orange accent */
+  --card-bg: #242424; /* Dark gray for cards */
+  --text-muted: #b3b6b3; /* Muted gray for secondary text */
+}
+
+body {
+  font-family: 'Orbitron', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-color);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+  background: var(--bg-color); /* Fallback color */
+}
+
+/* Background image with desaturation */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/img/backgroundundermine.png') no-repeat center center;
+  background-size: cover;
+  filter: grayscale(90%);
+  z-index: 0;
+}
+
+/* Overlay to ensure text readability */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(31, 31, 31, 0.8); /* Readability overlay */
+  z-index: 1;
+}
+
+/* Ensure content sits above the background and overlay */
+nav, header, main, footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(36, 36, 36, 0.9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  z-index: 10;
+}
+
+.nav .nav-brand a { /* Increased specificity */
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-color) !important; /* Force accent color as default */
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav .nav-brand a:link { /* Explicitly set unvisited state */
+  color: var(--accent-color);
+}
+
+.nav .nav-brand a:hover,
+.nav .nav-brand a:active,
+.nav .nav-brand a:visited {
+  color: var(--text-color); /* Text color on hover, active, visited */
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  padding: 0.5rem;
+  display: block;
+  position: relative;
+  z-index: 11;
+}
+
+.nav-links a:hover {
+  color: var(--accent-color);
+}
+
+/* Hero Header */
+.hero {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.hero h1 {
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  opacity: 0;
+  animation: fadeInDown 1s ease forwards;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+  opacity: 0;
+  animation: fadeInUp 1s ease 0.5s forwards;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Projects Section (now #addons) */
+#addons.projects {
+  padding: 4rem 2rem 4rem;
+  max-width: 1400px;
+  margin: 0 auto 4rem;
+  background: rgba(34, 34, 34, 0.8);
+  border-radius: 4px;
+  min-height: 400px;
+  scroll-margin-top: 80px;
+}
+
+.projects h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-color);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: var(--card-bg);
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: calc(var(--card-index) * 0.2s);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card:nth-child(1) { --card-index: 1; }
+.card:nth-child(2) { --card-index: 2; }
+.card:nth-child(3) { --card-index: 3; }
+
+.card:hover {
+  border: 1px solid var(--accent-color);
+}
+
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.card h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 1rem;
+}
+
+.card p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin: 0 1rem 1rem;
+}
+
+.grid a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(36, 36, 36, 0.9);
+  color: var(--text-muted);
+  border-top: 1px solid var(--accent-color);
+  margin-top: auto;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .nav {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .hero {
+    height: 60vh;
+  }
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+  .hero p {
+    font-size: 1.25rem;
+  }
+  #addons.projects {
+    padding: 3rem 1rem 3rem;
+    margin-bottom: 3rem;
+  }
+  .projects h2 {
+    font-size: 2.5rem;
+  }
+  .card h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+  .projects h2 {
+    font-size: 2rem;
+  }
+  .card img {
+    height: 180px;
+  }
+  .card h3, .card p {
+    margin: 0.75rem;
+  }
+}
