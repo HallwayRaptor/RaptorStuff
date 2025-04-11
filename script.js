@@ -1,4 +1,3 @@
-// script.js
 async function fetchLastUpdate(repo) {
     const cacheKey = `last-update-${repo}`;
     const cached = localStorage.getItem(cacheKey);
@@ -10,9 +9,7 @@ async function fetchLastUpdate(repo) {
     }
   
     try {
-      const response = await fetch(`https://api.github.com/repos/${repo}/releases/latest`, {
-        headers: window.GITHUB_TOKEN ? { 'Authorization': `token ${window.GITHUB_TOKEN}` } : {}
-      });
+      const response = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
       if (!response.ok) throw new Error('API request failed');
       const data = await response.json();
       const lastUpdate = data.published_at;
@@ -28,6 +25,7 @@ async function fetchLastUpdate(repo) {
       return null;
     }
   }
+  // Rest of the file unchanged
   
   function getRelativeTime(date) {
     const now = new Date();
