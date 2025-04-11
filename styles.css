@@ -1,22 +1,18 @@
-/* Reset and base styles */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Enable smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Color scheme */
 :root {
-  --bg-color: #242424; /* Dark gray background (fallback) */
-  --text-color: #f4f6f4; /* Off-white for text */
-  --accent-color: #de4633; /* Red-orange accent */
-  --card-bg: #242424; /* Dark gray for cards */
-  --text-muted: #b3b6b3; /* Muted gray for secondary text */
+  --bg-color: #242424;
+  --text-color: #f4f6f4;
+  --accent-color: #de4633;
+  --text-muted: #b3b6b3;
 }
 
 body {
@@ -28,46 +24,34 @@ body {
   flex-direction: column;
   overflow-x: hidden;
   position: relative;
-  background: var(--bg-color); /* Fallback color */
+  background: var(--bg-color);
 }
 
-/* Background image with desaturation */
 body::after {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('./img/backgroundundermine.avif') no-repeat center center;
-  background-size: cover;
+  inset: 0;
+  background: url('./img/backgroundundermine.avif') no-repeat center center/cover;
   filter: grayscale(90%);
   z-index: 0;
 }
 
-/* Overlay to ensure text readability */
 body::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(31, 31, 31, 0.8); /* Readability overlay */
+  inset: 0;
+  background: rgba(31, 31, 31, 0.8);
   z-index: 1;
 }
 
-/* Ensure content sits above the background and overlay */
 nav, header, main, footer {
   position: relative;
   z-index: 2;
 }
 
-/* Navigation */
 .nav {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
   background: rgba(36, 36, 36, 0.9);
   display: flex;
@@ -77,30 +61,23 @@ nav, header, main, footer {
   z-index: 10;
 }
 
-.nav .nav-brand a { /* Increased specificity */
+.nav-brand a {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--accent-color) !important; /* Force accent color as default */
+  color: var(--accent-color);
   text-transform: uppercase;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-.nav .nav-brand a:link { /* Explicitly set unvisited state */
-  color: var(--accent-color);
-}
-
-.nav .nav-brand a:hover,
-.nav .nav-brand a:active,
-.nav .nav-brand a:visited {
-  color: var(--text-color); /* Text color on hover, active, visited */
-  text-decoration: none;
+.nav-brand a:hover {
+  color: var(--text-color);
 }
 
 .nav-links {
-  list-style: none;
   display: flex;
   gap: 2rem;
+  list-style: none;
 }
 
 .nav-links a {
@@ -110,16 +87,12 @@ nav, header, main, footer {
   text-transform: uppercase;
   transition: color 0.3s ease;
   padding: 0.5rem;
-  display: block;
-  position: relative;
-  z-index: 11;
 }
 
 .nav-links a:hover {
   color: var(--accent-color);
 }
 
-/* Hero Header */
 .hero {
   height: 80vh;
   display: flex;
@@ -148,31 +121,18 @@ nav, header, main, footer {
   animation: fadeInUp 1s ease 0.5s forwards;
 }
 
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-50px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(50px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Projects Section */
 .projects {
-  padding: 4rem 2rem 4rem;
+  padding: 4rem 2rem;
   max-width: 1400px;
   margin: 0 auto 4rem;
   background: rgba(34, 34, 34, 0.8);
   border-radius: 4px;
-  min-height: 400px;
   scroll-margin-top: 80px;
 }
 
 .projects h2 {
   font-size: 3rem;
   font-weight: 700;
-  color: var(--text-color);
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -184,15 +144,13 @@ nav, header, main, footer {
 .subheader {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--text-color);
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin: 2rem 0;
   opacity: 0;
-  animation: fadeIn 1s ease forwards;
-  animation-delay: 0.6s; /* After the main h2 */
-  grid-column: 1 / -1; /* Span full width of grid */
+  animation: fadeIn 1s ease 0.6s forwards;
+  grid-column: 1 / -1;
 }
 
 .grid {
@@ -202,38 +160,25 @@ nav, header, main, footer {
 }
 
 .card {
-  background: var(--card-bg);
+  background: var(--bg-color);
   overflow: hidden;
   opacity: 0;
   animation: fadeIn 1s ease forwards;
   animation-delay: calc(var(--card-index) * 0.2s);
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 2px 0px, rgba(17, 17, 26, 0.15) 0px 0px 12px;
-  position: relative;
+  box-shadow: 0 2px 0 rgba(17, 17, 26, 0.1), 0 0 12px rgba(17, 17, 26, 0.15);
   transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .card:nth-child(1) { --card-index: 1; }
 .card:nth-child(2) { --card-index: 2; }
 .card:nth-child(3) { --card-index: 3; }
-.card:nth-child(5) { --card-index: 4; } /* Skip 4 (subheader) */
+.card:nth-child(5) { --card-index: 4; }
 .card:nth-child(6) { --card-index: 5; }
 .card:nth-child(7) { --card-index: 6; }
 
 .card:hover {
-  box-shadow: rgba(17, 17, 26, 0.15) 0px 4px 0px, rgba(17, 17, 26, 0.2) 0px 0px 16px;
+  box-shadow: 0 4px 0 rgba(17, 17, 26, 0.15), 0 0 16px rgba(17, 17, 26, 0.2);
   background: #1e1e1e;
-}
-
-.card:hover::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 2px solid var(--accent-color);
-  pointer-events: none;
-  z-index: 1;
 }
 
 .card img {
@@ -242,10 +187,17 @@ nav, header, main, footer {
   object-fit: cover;
 }
 
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 360px;
+  padding-bottom: 1rem;
+}
+
 .card h3 {
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--text-color);
   margin: 1rem;
 }
 
@@ -255,13 +207,50 @@ nav, header, main, footer {
   margin: 0 1rem 1rem;
 }
 
+.card h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 1rem 0.5rem;
+}
+
+.download-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0 1rem;
+}
+
+.download-btn {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 4px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.download-btn:hover {
+  background: #c53e2d;
+}
+
+.download-btn.disabled {
+  background: #4a4a4a;
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .grid a {
   text-decoration: none;
   color: inherit;
-  display: block;
 }
 
-/* Footer */
 footer {
   text-align: center;
   padding: 1.5rem;
@@ -271,13 +260,21 @@ footer {
   margin-top: auto;
 }
 
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-/* Responsive Design */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 900px) {
   .nav {
     padding: 1rem;
@@ -294,7 +291,7 @@ footer {
     font-size: 1.25rem;
   }
   .projects {
-    padding: 3rem 1rem 3rem;
+    padding: 3rem 1rem;
     margin-bottom: 3rem;
   }
   .projects h2 {
@@ -305,6 +302,13 @@ footer {
   }
   .card h3 {
     font-size: 1.5rem;
+  }
+  .card h4 {
+    font-size: 1.1rem;
+  }
+  .download-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
   }
 }
 
@@ -326,5 +330,16 @@ footer {
   }
   .card h3, .card p {
     margin: 0.75rem;
+  }
+  .card h4 {
+    margin: 0 0.75rem 0.5rem;
+    font-size: 1rem;
+  }
+  .download-links {
+    margin: 0 0.75rem;
+  }
+  .download-btn {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.5rem;
   }
 }
